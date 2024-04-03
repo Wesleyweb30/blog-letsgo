@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Festa {
 
     @Id
@@ -37,5 +35,5 @@ public class Festa {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate data_prevista;
     private Boolean status;
-    private int limite_participantes;
+    private int limite_participantes;   
 }
