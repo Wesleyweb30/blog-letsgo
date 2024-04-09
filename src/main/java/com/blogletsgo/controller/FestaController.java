@@ -2,16 +2,12 @@ package com.blogletsgo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import com.blogletsgo.model.Festa;
-import com.blogletsgo.repository.FestaRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.blogletsgo.service.FestaService;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,26 +21,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class FestaController {
 
     @Autowired
-    private FestaRepository repository;
+    private FestaService service;
 
     @GetMapping
     public ResponseEntity<List<Festa>> getFindAll() {
-        List<Festa> list = repository.findAll();
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<Festa> save(@RequestBody Festa entity) {
-        Festa festasave =  entity;
-        festasave.setData_criada((LocalDate.now(ZoneId.systemDefault())));
-        festasave.setStatus(true);
-        repository.save(festasave);
-        return ResponseEntity.status(HttpStatus.CREATED).body(festasave);
+    public ResponseEntity<Festa> save(@RequestBody Festa festaP) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(festaP));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Festa> findById(@PathVariable Long id){
-        Festa festa = repository.findById(id).orElseThrow();
+        Festa festa = service.findByid(id);
         return ResponseEntity.status(HttpStatus.OK).body(festa);
     }       
 }
