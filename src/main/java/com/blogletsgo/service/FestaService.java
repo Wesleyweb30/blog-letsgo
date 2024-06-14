@@ -32,4 +32,7 @@ public class FestaService {
         return festa;
     }
 
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
 }
